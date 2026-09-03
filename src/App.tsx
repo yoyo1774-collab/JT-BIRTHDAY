@@ -399,7 +399,7 @@ function BootScreen({
               />
 
               <span className="pin-form__channel">
-                APRIL × JT // PRIVATE CHANNEL
+                PAIRING PROTOCOL // ACTIVE
               </span>
 
               <span className="pin-form__tape-counter" aria-hidden="true">
