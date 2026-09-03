@@ -301,7 +301,7 @@ function BootScreen({
     state === "success" ? "JT_S_APRIL := CONFIRMED"
       : state === "april-birthday" ? "APRIL_BIRTHDAY := 04.09"
         : state === "anniversary" ? "RELATIONSHIP_START := 03.05"
-          : "APRIL × JT // PRIVATE CHANNEL";
+          : "UNAUTHORIZED LINK // JT";
 
   const screenMain =
     state === "error" ? "ACCESS DENIED"
@@ -315,7 +315,7 @@ function BootScreen({
       : state === "error" ? "比比哥又忘記重要日期？"
         : state === "april-birthday" ? "你好棒棒，你要幫我過很多個生日耶"
           : state === "anniversary" ? "APRIL × JT // ANNIVERSARY"
-            : "LOVE_SIGNAL : 抱抱充電";
+            : "ACCESS OWNER : APRIL";
 
   const statusText =
     state === "error" ? "ACCESS DENIED // 比比哥又忘記重要日期？"
