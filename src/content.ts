@@ -17,7 +17,9 @@ export type MemoryFolder = {
   memories: Memory[];
 };
 
-const photo = (index: number) => `/photos/memories/memory-${String(index).padStart(2, "0")}.jpg`;
+export const assetUrl = (path: string) => `${import.meta.env.BASE_URL}${path.replace(/^\/+/, "")}`;
+
+const photo = (index: number) => assetUrl(`/photos/memories/memory-${String(index).padStart(2, "0")}.jpg`);
 
 export const siteContent = {
   passcode: "0917",
@@ -40,7 +42,7 @@ export const siteContent = {
       date: "BEFORE US → US",
       hint: "初次訊號已捕捉",
       color: "mint",
-      mascot: "/pochacco/hello.jpg",
+      mascot: assetUrl("/pochacco/hello.jpg"),
       memories: [
         { image: photo(28), alt: "April 和 JT 第一次見面的視訊畫面", caption: "認識第一天", note: "第一次見面，覺得這個人看起來好累。完全沒想過，我們後來居然會在一起。" },
         { image: photo(40), alt: "April 和 JT 還沒交往前一起看棒球", caption: "一起看棒球", note: "你還沒追到我的時候時間好多，每天都有空約我出去哈哈。" },
@@ -57,14 +59,14 @@ export const siteContent = {
       date: "DATE LOG / SIDE A",
       hint: "約會紀錄持續寫入",
       color: "yellow",
-      mascot: "/pochacco/with-friend.png",
+      mascot: assetUrl("/pochacco/with-friend.png"),
       memories: [
         { image: photo(4), alt: "April 和 JT 一起吃西班牙菜", caption: "第一次知道你很怕吵", note: "現在知道你是寶寶耳朵，我要好好保護你。" },
         { image: photo(5), alt: "April 和 JT 一起吃飯的合照", caption: "一起吃飯", note: "常常連吃了什麼都忘記，只記得是跟你一起。" },
         { image: photo(6), alt: "April 和 JT 一起喝咖啡", caption: "一起喝咖啡", note: "一起喝咖啡，你工作，我看書。喜歡不用特別安排、很生活的時刻。" },
         { image: photo(12), alt: "喝醉後睡著的 JT", caption: "喝醉的人", note: "喝醉後變成超盧的大寶寶。" },
         { image: photo(42), alt: "April 陪 JT 去台南出差喝酒", caption: "去台南出差", note: "陪你去台南出差，一起去找大師喝酒。" },
-        { image: "/photos/memories/video-karaoke.mov", kind: "video", alt: "April 和 JT 的同事一起唱歌的影片", caption: "第一次跟你的同事見面", note: "跟你同事一起唱歌，學會很台的喝酒遊戲哈哈。" },
+        { image: assetUrl("/photos/memories/video-karaoke.mov"), kind: "video", alt: "April 和 JT 的同事一起唱歌的影片", caption: "第一次跟你的同事見面", note: "跟你同事一起唱歌，學會很台的喝酒遊戲哈哈。" },
       ],
     },
     {
@@ -74,15 +76,15 @@ export const siteContent = {
       date: "DAILY SIDE A / B",
       hint: "日常頻率同步中",
       color: "coral",
-      mascot: "/pochacco/running.webp",
+      mascot: assetUrl("/pochacco/running.webp"),
       memories: [
         { image: photo(17), alt: "April 和 JT 在 Apple Store 的合照", caption: "我們真的好常在信義區閒晃", note: "數不清陪你去過幾次Apple Store。喜歡一起到處晃晃。" },
         { image: photo(16), alt: "April 等 JT 睡著時拍下的照片", caption: "我喜歡等你睡著我才睡覺", note: "喜歡等你睡著才睡覺。看你安心關機，好像我的一天也終於可以收工。" },
         { image: photo(23), alt: "睡覺秒斷電的 JT", caption: "睡覺秒斷電", note: "睡覺秒斷電的比比哥。每次看你這樣都覺得你好辛苦。" },
         { image: photo(39), alt: "April 最喜歡的 JT 髮型", caption: "我最愛的髮型", note: "感謝實現我的心願，沒有瀏海的比比哥。直接心動害羞哈哈。" },
-        { image: "/photos/memories/nerdy-youtube.jpg", alt: "JT 專心做模型，April 陪他看 YouTube", caption: "陪你做你喜歡的事", note: "喜歡看你做很宅的事，也喜歡一起看那些我根本不會看的YouTube影片。" },
+        { image: assetUrl("/photos/memories/nerdy-youtube.jpg"), alt: "JT 專心做模型，April 陪他看 YouTube", caption: "陪你做你喜歡的事", note: "喜歡看你做很宅的事，也喜歡一起看那些我根本不會看的YouTube影片。" },
         { image: photo(43), alt: "April 和 JT 一起聽五月天演唱會", caption: "一起聽演唱會", note: "五月天演唱會。以前是你的回憶，這一次也變成我們的了。" },
-        { image: "/photos/memories/video-guanghua.mov", kind: "video", alt: "April 陪 JT 逛光華商場的影片", caption: "陪你逛光華商場", note: "穿的超美陪你逛光華商場。我是世界最好的女朋友哈哈。" },
+        { image: assetUrl("/photos/memories/video-guanghua.mov"), kind: "video", alt: "April 陪 JT 逛光華商場的影片", caption: "陪你逛光華商場", note: "穿的超美陪你逛光華商場。我是世界最好的女朋友哈哈。" },
       ],
     },
     {
@@ -92,7 +94,7 @@ export const siteContent = {
       date: "QUIET LINK / VIDEO CALL",
       hint: "私人連線保持中",
       color: "cream",
-      mascot: "/pochacco/portrait.webp",
+      mascot: assetUrl("/pochacco/portrait.webp"),
       memories: [
         { image: photo(19), alt: "April 和 JT 的第一張 Uber 牽手照", caption: "UBER 01", note: "車上是難得你可以放鬆休息的時候。" },
         { image: photo(20), alt: "April 和 JT 的第二張 Uber 牽手照", caption: "UBER 02", note: "喜歡在車上牽手。" },
@@ -112,7 +114,7 @@ export const siteContent = {
       date: "OUR PEOPLE / OUR DAYS",
       hint: "生活資料合併中",
       color: "mint",
-      mascot: "/pochacco/praying.gif",
+      mascot: assetUrl("/pochacco/praying.gif"),
       memories: [
         { image: photo(14), alt: "JT 幫 April 慶祝生日", caption: "我們的第一個生日", note: "一起過的第一個生日。希望以後還要一起過好多個。" },
         { image: photo(44), alt: "比比哥和 April 的好朋友們", caption: "比比哥跟我的好朋友們", note: "2026年最幸福的一天，跟我最愛的人們一起。" },
