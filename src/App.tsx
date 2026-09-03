@@ -298,7 +298,7 @@ function BootScreen({
   });
 
   const screenTitle =
-    state === "success" ? "JT_LOVES_APRIL := CONFIRMED"
+    state === "success" ? "JT_S_APRIL := CONFIRMED"
       : state === "april-birthday" ? "APRIL_BIRTHDAY := 04.09"
         : state === "anniversary" ? "RELATIONSHIP_START := 03.05"
           : "APRIL × JT // PRIVATE CHANNEL";
@@ -313,7 +313,7 @@ function BootScreen({
   const screenDetail =
     state === "success" ? "WELCOME BACK, 比比哥"
       : state === "error" ? "比比哥又忘記重要日期？"
-        : state === "april-birthday" ? "你終於記住了，你要幫我過很多個生日耶"
+        : state === "april-birthday" ? "你好棒棒，你要幫我過很多個生日耶"
           : state === "anniversary" ? "APRIL × JT // ANNIVERSARY"
             : "LOVE_SIGNAL : 抱抱充電";
 
@@ -686,9 +686,9 @@ function LoveSignal({ onReplay }: { onReplay: () => void }) {
       </p>
 
       <h2 id="love-title">
-        LOVE SIGNAL
+        HAPPY BIRTHDAY
         <br />
-        RECEIVED.
+        JONATHAN
       </h2>
 
       <div className="love-signal__grid">
@@ -738,7 +738,7 @@ const DOS_BIRTHDAY_MESSAGE = [
   "APRIL PRIORITY: MAX",
   "LOVE STATUS: OVERFLOW",
   "",
-  "HAPPY BIRTHDAY JT!",
+  "HAPPY BIRTHDAY JT",
   "LOVE YOU",
   "",
   "        i  i  i",
@@ -749,8 +749,7 @@ const DOS_BIRTHDAY_MESSAGE = [
   " |                  |",
   " |__________________|",
   "",
-  "APRIL",
-  "2026.09.17",
+  "APRIL  2026.09.17",
 ].join("\n");
 
 function DosEngineerSequence({ onExit }: { onExit: () => void }) {
@@ -1326,7 +1325,7 @@ function Desktop({
           </span>
 
           <span>
-            <b>LOVE SIGNAL</b>
+            <b>SIGNAL // 0917</b>
             <small>BIRTHDAY TERMINAL</small>
           </span>
         </div>
