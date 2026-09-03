@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
-import { siteContent, type MemoryFolder } from "./content";
+import { assetUrl, siteContent, type MemoryFolder } from "./content";
 
 gsap.registerPlugin(useGSAP);
 
@@ -85,9 +85,9 @@ function FinalPhoto() {
   return (
     <span className="final-photo__placeholder">
       {!failed ? (
-        <img src="/photos/memories/memory-29.jpg" alt="我們最喜歡的一張主視覺合照" onError={() => setFailed(true)} />
+        <img src={assetUrl("/photos/memories/memory-29.jpg")} alt="我們最喜歡的一張主視覺合照" onError={() => setFailed(true)} />
       ) : (
-        <><img className="final-photo__mascot" src="/pochacco/praying.gif" alt="閉著眼睛許願的 Pochacco" /><b>WAITING FOR OUR PHOTO</b><small>/photos/final.jpg</small></>
+        <><img className="final-photo__mascot" src={assetUrl("/pochacco/praying.gif")} alt="閉著眼睛許願的 Pochacco" /><b>WAITING FOR OUR PHOTO</b><small>/photos/final.jpg</small></>
       )}
     </span>
   );
@@ -257,7 +257,7 @@ function BootScreen({ onUnlock, play, muted, onToggleSound }: { onUnlock: () => 
         <div className="login-machine">
           <div className="boot__device" aria-hidden="true">
             <div className="pixel-terminal">
-              <img className="pixel-terminal__art" src="/pochacco/login-hacker-terminal-v2.png?v=20260902" alt="" />
+              <img className="pixel-terminal__art" src={assetUrl("/pochacco/login-hacker-terminal-v2.png?v=20260902")} alt="" />
               <div className="pixel-terminal__screen">
                 <div className="pixel-terminal__data-stream">
                   {[0, 1].map((copy) => (
@@ -502,9 +502,9 @@ function DosEngineerSequence({ onExit }: { onExit: () => void }) {
   return (
     <button className="dos-mode" type="button" onClick={onExit} aria-label="退出 Pochacco 工程師 DOS 動畫">
       <div className="dos-stage" ref={stageRef}>
-        <img src="/pochacco/dos-engineer.png" alt="" />
-        <img className="dos-frame dos-frame--left" src="/pochacco/dos-typing-left.png" alt="" aria-hidden="true" />
-        <img className="dos-frame dos-frame--right" src="/pochacco/dos-typing-right.png" alt="" aria-hidden="true" />
+        <img src={assetUrl("/pochacco/dos-engineer.png")} alt="" />
+        <img className="dos-frame dos-frame--left" src={assetUrl("/pochacco/dos-typing-left.png")} alt="" aria-hidden="true" />
+        <img className="dos-frame dos-frame--right" src={assetUrl("/pochacco/dos-typing-right.png")} alt="" aria-hidden="true" />
         <div className="dos-screen" aria-label="HAPPY BIRTHDAY JT! LOVE YOU. APRIL. 2026.09.17">
           <div className="dos-screen__title">JT-DOS 9.17 // APRIL LOVE SYSTEM</div>
           <div className="dos-typewriter" aria-hidden="true">
@@ -552,7 +552,7 @@ function BirthdayTransmission({ play }: { play: (kind: SoundKind) => void }) {
       </div>
       <div className="wish-console">
         <button type="button" className="birthday-character" onClick={lightNextCandle} aria-label={complete ? "重新播放壽星 Pochacco 的生日蠟燭" : `點燃壽星 Pochacco 蛋糕的第 ${candles + 1} 根蠟燭`}>
-          <img src="/pochacco/birthday-jt.png" alt="戴著生日帽、捧著電子蛋糕的壽星版 Pochacco" />
+          <img src={assetUrl("/pochacco/birthday-jt.png")} alt="戴著生日帽、捧著電子蛋糕的壽星版 Pochacco" />
           <span className="birthday-character__candles" aria-hidden="true">{[0, 1, 2].map((index) => <i className={index < candles ? "is-lit" : ""} key={index}><b /></i>)}</span>
           <span className="birthday-character__label" aria-hidden="true">JT // {siteContent.birthdayAge}</span>
         </button>
@@ -595,7 +595,7 @@ function MemeAlert({ onClose, play }: { onClose: () => void; play: (kind: SoundK
       <span className="meme-alert__flash" aria-hidden="true" />
       <div className="meme-alert__panel">
         <p className="meme-alert__warning" id="meme-title">UNAUTHORIZED MEME DETECTED</p>
-        <img src="/meme/meme.png" alt="Pochacco 說自己靠幽默追到十分女友的迷因" />
+        <img src={assetUrl("/meme/meme.png")} alt="Pochacco 說自己靠幽默追到十分女友的迷因" />
         <div className="meme-alert__terminal" aria-label="JT 幽默分析結果">
           <span className="meme-alert__line">ANALYZING JT...</span>
           <span className="meme-alert__line">HUMOR LEVEL ........ 100%</span>
@@ -673,7 +673,7 @@ function Desktop({ play }: { play: (kind: SoundKind) => void }) {
         </div>
         <button ref={riderRef} className="rider-console" type="button" onClick={tapPuppy} aria-label={`秘密訊號按鈕，已點擊 ${puppyClicks} 次`}>
           <span className="rider-console__shockwave" aria-hidden="true" />
-          <img src="/pochacco/neo-tokyo-rider.png" alt="" />
+          <img src={assetUrl("/pochacco/neo-tokyo-rider.png")} alt="" />
           <span className="rider-console__label"><b>RIDER // {siteContent.recipient.callsign}-93</b><small>{puppyClicks ? `SECRET INPUT ${puppyClicks}/3` : "TOUCH TO BOOST SIGNAL"}</small></span>
           <span className="rider-console__speed" aria-hidden="true">
             {[0, 1, 2].map((index) => <i className={index < puppyClicks ? "is-active" : ""} key={index} />)}
