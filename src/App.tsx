@@ -1409,7 +1409,7 @@ function Desktop({
 
           <span className="rider-console__label">
             <b>
-              RIDER // {siteContent.recipient.callsign}-93
+              HACKER // {siteContent.recipient.callsign}-93
             </b>
 
             <small>
