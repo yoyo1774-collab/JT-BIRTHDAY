@@ -1124,7 +1124,7 @@ function MemeAlert({
           className="meme-alert__warning"
           id="meme-title"
         >
-          UNAUTHORIZED MEME DETECTED
+          UNAUTHORIZED USER DETECTED
         </p>
 
         <img
