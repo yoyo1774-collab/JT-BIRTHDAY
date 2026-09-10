@@ -1,6 +1,6 @@
-# LOVE SIGNAL // 0917
+# BIRTHDAY SIGNAL // 0917
 
-Pochacco-inspired Cassette Futurism 私人紀念網站。密碼預設為 `0917`。
+Pochacco-inspired Cassette Futurism 紀念網站。密碼預設為 `0917`。
 
 ## 啟動
 
