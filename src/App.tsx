@@ -674,9 +674,56 @@ function MemoryModal({
   );
 }
 
-function LoveSignal({ onReplay }: { onReplay: () => void }) {
+function LoveSignal({
+  onReplay,
+  muted,
+}: {
+  onReplay: () => void;
+  muted: boolean;
+}) {
+  const bgmRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const bgm = bgmRef.current;
+    if (!bgm) return;
+
+    bgm.volume = 0;
+
+    if (!muted) {
+      void bgm.play().then(() => {
+        gsap.to(bgm, {
+          volume: 0.22,
+          duration: 1.5,
+          ease: "power2.out",
+        });
+      }).catch(() => undefined);
+    }
+
+    return () => {
+      gsap.killTweensOf(bgm);
+      bgm.pause();
+      bgm.currentTime = 0;
+    };
+  }, []);
+
+  useEffect(() => {
+    const bgm = bgmRef.current;
+    if (!bgm) return;
+
+    if (muted) {
+      bgm.pause();
+    } else {
+      void bgm.play().catch(() => undefined);
+    }
+  }, [muted]);
+
   return (
     <section className="love-signal" aria-labelledby="love-title">
+      <audio
+        ref={bgmRef}
+        src={assetUrl("/audio/letter-bgm.mp3")}
+        preload="auto"
+      />
       <div className="love-signal__wave" aria-hidden="true">
         ♡﹏♡﹏♡﹏♡﹏♡
       </div>
@@ -743,11 +790,11 @@ const DOS_BIRTHDAY_MESSAGE = [
   "",
   "        i  i  i",
   "       |:||:||:|",
-  "     __|______|__",
-  "    |            |",
-  "  __| 1993.09.17 |__",
-  " |                  |",
-  " |__________________|",
+  "     ___|______|__",
+  "    |             |",
+  "  __|  1993.09.17 |__",
+  " |                   |",
+  " |___________________|",
   "",
   "APRIL  2026.09.17",
 ].join("\n");
@@ -1016,8 +1063,8 @@ function BirthdayTransmission({
 
           <p aria-live="polite">
             {complete
-              ? "MAKE A WISH // 願望已寫入"
-              : `IGNITION ${candles}/3 // 點亮電子蠟燭`}
+              ? "MAKE A WISH // 願望已載入"
+              : `IGNITION ${candles}/3 // 點亮三支蠟燭`}
           </p>
         </div>
       </section>
@@ -1165,8 +1212,10 @@ function MemeAlert({
 
 function Desktop({
   play,
+  muted,
 }: {
   play: (kind: SoundKind) => void;
+  muted: boolean;
 }) {
   const [folder, setFolder] =
     useState<MemoryFolder | null>(null);
@@ -1491,7 +1540,7 @@ function Desktop({
 
       {showLove && (
         <div id="love-signal">
-          <LoveSignal onReplay={replay} />
+          <LoveSignal onReplay={replay} muted={muted} />
         </div>
       )}
 
@@ -1544,7 +1593,7 @@ export default function App() {
       )}
 
       {unlocked ? (
-        <Desktop play={play} />
+        <Desktop play={play} muted={muted} />
       ) : (
         <BootScreen
           onUnlock={() => setUnlocked(true)}
