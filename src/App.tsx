@@ -1293,18 +1293,23 @@ function Desktop({
 
     // Start the Letter BGM directly on the third user click.
     // Keep a fixed audible volume first; no GSAP volume tween.
-    if (next === 3 && !muted) {
-      const bgm = letterBgmRef.current;
+    const bgm = letterBgmRef.current;
 
-      if (bgm) {
-        bgm.pause();
-        bgm.currentTime = 0;
-        bgm.volume = 0.35;
+    // First Pochacco click: begin downloading the Letter BGM in the background.
+    // The audio is not played yet, so page images keep priority during initial load.
+    if (next === 1 && bgm) {
+      bgm.load();
+    }
 
-        void bgm.play().catch((error) => {
-          console.error("LETTER_BGM_PLAY_FAILED", error);
-        });
-      }
+    // Third Pochacco click: play the already-preloaded Letter BGM.
+    if (next === 3 && !muted && bgm) {
+      bgm.pause();
+      bgm.currentTime = 0;
+      bgm.volume = 0.35;
+
+      void bgm.play().catch((error) => {
+        console.error("LETTER_BGM_PLAY_FAILED", error);
+      });
     }
   };
 
@@ -1366,7 +1371,7 @@ function Desktop({
       <audio
         ref={letterBgmRef}
         src={assetUrl("/audio/letter-bgm.mp3")}
-        preload="auto"
+        preload="none"
       />
       <header className="desktop__header">
         <div className="brand">
