@@ -674,56 +674,9 @@ function MemoryModal({
   );
 }
 
-function LoveSignal({
-  onReplay,
-  muted,
-}: {
-  onReplay: () => void;
-  muted: boolean;
-}) {
-  const bgmRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    const bgm = bgmRef.current;
-    if (!bgm) return;
-
-    bgm.volume = 0;
-
-    if (!muted) {
-      void bgm.play().then(() => {
-        gsap.to(bgm, {
-          volume: 0.22,
-          duration: 1.5,
-          ease: "power2.out",
-        });
-      }).catch(() => undefined);
-    }
-
-    return () => {
-      gsap.killTweensOf(bgm);
-      bgm.pause();
-      bgm.currentTime = 0;
-    };
-  }, []);
-
-  useEffect(() => {
-    const bgm = bgmRef.current;
-    if (!bgm) return;
-
-    if (muted) {
-      bgm.pause();
-    } else {
-      void bgm.play().catch(() => undefined);
-    }
-  }, [muted]);
-
+function LoveSignal({ onReplay }: { onReplay: () => void }) {
   return (
     <section className="love-signal" aria-labelledby="love-title">
-      <audio
-        ref={bgmRef}
-        src={assetUrl("/audio/letter-bgm.mp3")}
-        preload="auto"
-      />
       <div className="love-signal__wave" aria-hidden="true">
         ♡﹏♡﹏♡﹏♡﹏♡
       </div>
@@ -790,11 +743,11 @@ const DOS_BIRTHDAY_MESSAGE = [
   "",
   "        i  i  i",
   "       |:||:||:|",
-  "     ___|______|__",
-  "    |             |",
-  "  __|  1993.09.17 |__",
-  " |                   |",
-  " |___________________|",
+  "     __|______|__",
+  "    |            |",
+  "  __| 1993.09.17 |__",
+  " |                  |",
+  " |__________________|",
   "",
   "APRIL  2026.09.17",
 ].join("\n");
@@ -1063,8 +1016,8 @@ function BirthdayTransmission({
 
           <p aria-live="polite">
             {complete
-              ? "MAKE A WISH // 願望已載入"
-              : `IGNITION ${candles}/3 // 點亮三支蠟燭`}
+              ? "MAKE A WISH // 願望已寫入"
+              : `IGNITION ${candles}/3 // 點亮電子蠟燭`}
           </p>
         </div>
       </section>
@@ -1224,6 +1177,7 @@ function Desktop({
   const [showLove, setShowLove] = useState(false);
 
   const riderRef = useRef<HTMLButtonElement>(null);
+  const letterBgmRef = useRef<HTMLAudioElement>(null);
 
   const { contextSafe } = useGSAP(
     () => {},
@@ -1336,6 +1290,20 @@ function Desktop({
           ? "signal2"
           : "success"
     );
+
+    // Start playback during the user's third click so mobile/desktop
+    // browsers treat it as a user-initiated audio action.
+    if (next === 3 && !muted) {
+      const bgm = letterBgmRef.current;
+
+      if (bgm) {
+        gsap.killTweensOf(bgm);
+        bgm.currentTime = 0;
+        bgm.volume = 0;
+
+        void bgm.play().catch(() => undefined);
+      }
+    }
   };
 
   useEffect(() => {
@@ -1350,13 +1318,45 @@ function Desktop({
           behavior: "smooth"
         });
 
+      const bgm = letterBgmRef.current;
+
+      if (bgm && !muted) {
+        gsap.killTweensOf(bgm);
+        gsap.to(bgm, {
+          volume: 0.22,
+          duration: 1.5,
+          ease: "power2.out",
+        });
+      }
+
       setPuppyClicks(0);
     }, 420);
 
     return () => window.clearTimeout(timer);
-  }, [puppyClicks]);
+  }, [puppyClicks, muted]);
+
+  useEffect(() => {
+    const bgm = letterBgmRef.current;
+    if (!bgm) return;
+
+    if (muted) {
+      gsap.killTweensOf(bgm);
+      bgm.pause();
+    } else if (showLove) {
+      void bgm.play().catch(() => undefined);
+    }
+  }, [muted, showLove]);
 
   const replay = () => {
+    const bgm = letterBgmRef.current;
+
+    if (bgm) {
+      gsap.killTweensOf(bgm);
+      bgm.pause();
+      bgm.currentTime = 0;
+      bgm.volume = 0;
+    }
+
     setShowLove(false);
 
     window.scrollTo({
@@ -1367,6 +1367,11 @@ function Desktop({
 
   return (
     <main className="desktop">
+      <audio
+        ref={letterBgmRef}
+        src={assetUrl("/audio/letter-bgm.mp3")}
+        preload="auto"
+      />
       <header className="desktop__header">
         <div className="brand">
           <span className="brand__mark">
@@ -1540,7 +1545,7 @@ function Desktop({
 
       {showLove && (
         <div id="love-signal">
-          <LoveSignal onReplay={replay} muted={muted} />
+          <LoveSignal onReplay={replay} />
         </div>
       )}
 
