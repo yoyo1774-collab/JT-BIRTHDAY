@@ -1291,17 +1291,19 @@ function Desktop({
           : "success"
     );
 
-    // Start playback during the user's third click so mobile/desktop
-    // browsers treat it as a user-initiated audio action.
+    // Start the Letter BGM directly on the third user click.
+    // Keep a fixed audible volume first; no GSAP volume tween.
     if (next === 3 && !muted) {
       const bgm = letterBgmRef.current;
 
       if (bgm) {
-        gsap.killTweensOf(bgm);
+        bgm.pause();
         bgm.currentTime = 0;
-        bgm.volume = 0;
+        bgm.volume = 0.35;
 
-        void bgm.play().catch(() => undefined);
+        void bgm.play().catch((error) => {
+          console.error("LETTER_BGM_PLAY_FAILED", error);
+        });
       }
     }
   };
@@ -1318,17 +1320,6 @@ function Desktop({
           behavior: "smooth"
         });
 
-      const bgm = letterBgmRef.current;
-
-      if (bgm && !muted) {
-        gsap.killTweensOf(bgm);
-        gsap.to(bgm, {
-          volume: 0.22,
-          duration: 1.5,
-          ease: "power2.out",
-        });
-      }
-
       setPuppyClicks(0);
     }, 420);
 
@@ -1340,10 +1331,16 @@ function Desktop({
     if (!bgm) return;
 
     if (muted) {
-      gsap.killTweensOf(bgm);
       bgm.pause();
-    } else if (showLove) {
-      void bgm.play().catch(() => undefined);
+      return;
+    }
+
+    if (showLove) {
+      bgm.volume = 0.35;
+
+      void bgm.play().catch((error) => {
+        console.error("LETTER_BGM_RESUME_FAILED", error);
+      });
     }
   }, [muted, showLove]);
 
@@ -1351,10 +1348,9 @@ function Desktop({
     const bgm = letterBgmRef.current;
 
     if (bgm) {
-      gsap.killTweensOf(bgm);
       bgm.pause();
       bgm.currentTime = 0;
-      bgm.volume = 0;
+      bgm.volume = 0.35;
     }
 
     setShowLove(false);
