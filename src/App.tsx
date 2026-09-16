@@ -298,7 +298,7 @@ function BootScreen({
   });
 
   const screenTitle =
-    state === "success" ? "JT_S_APRIL := CONFIRMED"
+    state === "success" ? "JT_LOVE_APRIL := CONFIRMED"
       : state === "april-birthday" ? "APRIL_BIRTHDAY := 04.09"
         : state === "anniversary" ? "RELATIONSHIP_START := 03.05"
           : "UNAUTHORIZED LINK // JT";
